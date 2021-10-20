@@ -26,13 +26,13 @@ export default {
         'Authorization': localStorage.getItem("token")
       }
 
-      axios.get('https://localhost:44368/Authentication/login',{
+      axios.post('https://localhost:44368/Authentication/login',{
         "email": this.email,
         "password": this.password
       },{headers: headers})
           .then((response) => {
-            console.log(response)
-            //this.$router.push("/login")
+            this.$emit('setToken', response.data)
+            this.$router.push("/autherized")
           })
     }
   }

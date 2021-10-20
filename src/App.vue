@@ -1,7 +1,13 @@
 <template>
-<Nav/>
+<Nav
+    :authorized="this.isAuthorized"
+    v-on:clearToken="clearToken"
+/>
   <main class="form-signin">
-   <router-view/>
+   <router-view
+       v-on:setToken="setToken"
+       v-on:clearToken="clearToken"
+   />
   </main>
 </template>
 
@@ -34,10 +40,26 @@
   border-top-right-radius: 0;
 }
 </style>
-<script>
+<script lang="js">
 import Nav from "@/components/Nav";
 
 export default {
-  components: {Nav}
+  components: {Nav},
+  data(){
+    return{
+      isAuthorized: false
+    }
+  },
+  methods:{
+    setToken(token){
+      console.log(token);
+      localStorage.setItem("token", token);
+      this.isAuthorized = true;
+    },
+    clearToken(){
+      localStorage.clear();
+      this.isAuthorized = false;
+    }
+  }
 }
 </script>
